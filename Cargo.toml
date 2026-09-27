@@ -1,0 +1,12 @@
+[package]
+name = "matmult2"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+divan = "0.1.21"
+rand = "0.10.3"
+
+[[bench]]
+name = "bench_mult"
+harness = false

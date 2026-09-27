@@ -1,0 +1,11 @@
+/target
+
+# Mac File System File...utterly useless to anyone but me.
+.DS_Store
+
+tmp
+
+# Ignore vim files:
+*~
+*.swp
+*.swo
