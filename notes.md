@@ -17,3 +17,7 @@ bench_mult    fastest       │ slowest       │ median        │ mean        
    ├─ 128     714.4 ms      │ 876 ms        │ 729.1 ms      │ 739.7 ms      │ 100     │ 100
    ├─ 256     805.5 ms      │ 883.3 ms      │ 817.3 ms      │ 819.4 ms      │ 100     │ 100
    ╰─ 512     857.8 ms      │ 912.1 ms      │ 872.2 ms      │ 874.6 ms      │ 100     │
+
+## IGNORE EVERYTHING ABOVE
+
+unit tests revealed some bugs in the multiplication code.
