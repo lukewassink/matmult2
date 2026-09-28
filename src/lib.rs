@@ -114,7 +114,7 @@ pub fn tiled_mult(m1: &FlatMatrix, m2: &FlatMatrix, tile_size: usize) -> FlatMat
                         for z in k..min(k + tile_size, m1.cols) {
                             acc += m1.at(x, z) * m2.at(z, y);
                         }
-                        prod.set(i, j, acc + prod.at(i, j));
+                        prod.set(x, y, acc + prod.at(x, y));
                     }
                 }
             }
@@ -124,7 +124,7 @@ pub fn tiled_mult(m1: &FlatMatrix, m2: &FlatMatrix, tile_size: usize) -> FlatMat
     prod
 }
 
-pub fn prallel_tiled_mult(
+pub fn parallel_tiled_mult(
     m1: &FlatMatrix,
     m2: &FlatMatrix,
     tile_size: usize,
@@ -137,7 +137,7 @@ pub fn prallel_tiled_mult(
     let mut vals = vec![0.0; rows * cols];
 
     let tile_rows = rows.div_ceil(tile_size);
-    let thread_tile_rows = tile_rows.div_ceil(tile_rows);
+    let thread_tile_rows = tile_rows.div_ceil(threads);
     let thread_rows = thread_tile_rows * tile_size;
 
     {
@@ -160,7 +160,7 @@ pub fn prallel_tiled_mult(
                                         for z in k..min(k + tile_size, m1.cols) {
                                             acc += m1.at(x, z) * m2.at(z, y);
                                         }
-                                        band[(i - start_row) * cols + j] += acc;
+                                        band[(x - start_row) * cols + y] += acc;
                                     }
                                 }
                             }

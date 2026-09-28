@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+approx = "0.5.1"
 crossbeam = "0.8.5"
 divan = "0.1.21"
 rand = "0.10.3"

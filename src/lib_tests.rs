@@ -1,20 +1,14 @@
 use super::*;
+use approx::assert_abs_diff_eq;
 
-fn approx_compare(a: &FlatMatrix, b: &FlatMatrix, tolerance: f64) -> bool {
-    if a.rows != b.rows || a.cols != b.cols {
-        return false;
-    }
-    if a.vals.len() != b.vals.len() {
-        return false;
-    }
+fn assert_approx_eq(a: &FlatMatrix, b: &FlatMatrix, tolerance: f64) {
+    assert_eq!(a.rows, b.rows);
+    assert_eq!(a.cols, b.cols);
+    assert_eq!(a.vals.len(), b.vals.len());
 
     for i in 0..(a.vals.len()) {
-        if (a.vals[i] - b.vals[i]).abs() > tolerance {
-            return false;
-        }
+        assert_abs_diff_eq!(a.vals[i], b.vals[i], epsilon = tolerance);
     }
-
-    true
 }
 
 #[test]
@@ -65,17 +59,31 @@ fn tiled_test() {
                     random_fill_random_seed(&mut a);
                     random_fill_random_seed(&mut b);
 
-                    println!("\n\n tile size: {}", tile_size);
-                    println!("a: {}", a.print());
-                    println!("b: {}", b.print());
-                    println!("naive prod: {}", naive_mult(&a, &b).print());
-                    println!("tiled prod: {}", tiled_mult(&a, &b, tile_size).print());
+                    assert_approx_eq(&naive_mult(&a, &b), &tiled_mult(&a, &b, tile_size), 0.00001);
+                }
+            }
+        }
+    }
+}
 
-                    assert!(approx_compare(
-                        &naive_mult(&a, &b),
-                        &tiled_mult(&a, &b, tile_size),
-                        0.00001
-                    ));
+#[test]
+fn par_tiled_test() {
+    for rows in 1..10 {
+        for cols in 1..10 {
+            for inner in 1..10 {
+                for tile_size in 1..5 {
+                    for threads in 1..3 {
+                        let mut a = FlatMatrix::new(rows, inner);
+                        let mut b = FlatMatrix::new(inner, cols);
+                        random_fill_random_seed(&mut a);
+                        random_fill_random_seed(&mut b);
+
+                        assert_approx_eq(
+                            &naive_mult(&a, &b),
+                            &&parallel_tiled_mult(&a, &b, tile_size, threads),
+                            0.00001,
+                        );
+                    }
                 }
             }
         }
