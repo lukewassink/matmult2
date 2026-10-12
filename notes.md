@@ -200,4 +200,10 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 bench_mult              fastest       │ slowest       │ median        │ mean          │ samples │ iters
-├─ algebraic_ops_bench  
+├─ algebraic_ops_bench  1.254 s       │ 1.466 s       │ 1.262 s       │ 1.274 s       │ 100     │ 100
+├─ local_acc            (ignored)     │               │               │               │         │
+├─ naive                (ignored)     │               │               │               │         │
+├─ par_tiled            (ignored)     │               │               │               │         │
+├─ raw_slice            (ignored)     │               │               │               │         │
+╰─ tiled                (ignored)     │               │               │               │         │
+

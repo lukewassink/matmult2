@@ -49,6 +49,22 @@ fn naive_local_test() {
 }
 
 #[test]
+fn iterator_test() {
+    for rows in 1..5 {
+        for cols in 1..5 {
+            for inner in 1..5 {
+                let mut a = FlatMatrix::new(rows, inner);
+                let mut b = FlatMatrix::new(inner, cols);
+                random_fill_random_seed(&mut a);
+                random_fill_random_seed(&mut b);
+
+                assert_eq!(iterator_mult(&a, &b), naive_mult(&a, &b));
+            }
+        }
+    }
+}
+
+#[test]
 fn tiled_test() {
     for rows in 1..10 {
         for cols in 1..10 {

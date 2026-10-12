@@ -100,6 +100,32 @@ pub fn naive_local_mult(m1: &FlatMatrix, m2: &FlatMatrix) -> FlatMatrix {
     out
 }
 
+pub fn iterator_mult(m1: &FlatMatrix, m2: &FlatMatrix) -> FlatMatrix {
+    validate_dimensions(m1, m2);
+
+    let rows = m1.rows;
+    let inner = m1.cols;
+    let cols = m2.cols;
+    let m1_vals = &m1.vals;
+    let m2_vals = &m2.vals;
+    let mut prod: Vec<f64> = vec![0.0; m1.rows * m2.cols];
+
+    for i in 0..rows {
+        for j in 0..cols {
+            let a = m1_vals.iter().skip(i * inner).take(inner);
+            let b = m2_vals.iter().skip(j).step_by(cols).take(inner);
+
+            prod[i * cols + j] = a.zip(b).map(|(x, y)| x * y).sum();
+        }
+    }
+
+    FlatMatrix {
+        rows,
+        cols,
+        vals: prod,
+    }
+}
+
 pub fn naive_raw_slice(m1: &FlatMatrix, m2: &FlatMatrix) -> FlatMatrix {
     validate_dimensions(m1, m2);
 
