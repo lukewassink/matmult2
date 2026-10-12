@@ -100,22 +100,63 @@ pub fn naive_local_mult(m1: &FlatMatrix, m2: &FlatMatrix) -> FlatMatrix {
     out
 }
 
-pub fn fused_mul_add(m1: &FlatMatrix, m2: &FlatMatrix) -> FlatMatrix {
+pub fn naive_raw_slice(m1: &FlatMatrix, m2: &FlatMatrix) -> FlatMatrix {
     validate_dimensions(m1, m2);
 
-    let mut out = FlatMatrix::new(m1.rows, m2.cols);
+    let rows = m1.rows;
+    let inner = m1.cols;
+    let cols = m2.cols;
+    let m1_vals = &m1.vals;
+    let m2_vals = &m2.vals;
+    let mut prod: Vec<f64> = vec![0.0; m1.rows * m2.cols];
 
-    for i in 0..m1.rows {
-        for j in 0..m2.cols {
+    for i in 0..rows {
+        for j in 0..cols {
+            assert!(m1_vals.len() >= (rows - 1) * inner + inner);
+            assert!(m2_vals.len() >= (inner - 1) * cols + cols);
             let mut acc = 0.0;
-            for k in 0..m1.cols {
-                acc = m1.at(i, k).mul_add(m2.at(k, j), acc);
+            for k in 0..inner {
+                acc += m1_vals[i * inner + k] * m2_vals[k * cols + j];
             }
-            out.set(i, j, acc);
+            prod[i * cols + j] = acc;
         }
     }
 
-    out
+    FlatMatrix {
+        rows,
+        cols,
+        vals: prod,
+    }
+}
+
+pub fn alebraic_ops(m1: &FlatMatrix, m2: &FlatMatrix) -> FlatMatrix {
+    validate_dimensions(m1, m2);
+
+    let rows = m1.rows;
+    let inner = m1.cols;
+    let cols = m2.cols;
+    let m1_vals = &m1.vals;
+    let m2_vals = &m2.vals;
+    let mut prod: Vec<f64> = vec![0.0; m1.rows * m2.cols];
+
+    for i in 0..rows {
+        for j in 0..cols {
+            assert!(m1_vals.len() >= (rows - 1) * inner + inner);
+            assert!(m2_vals.len() >= (inner - 1) * cols + cols);
+            let mut acc: f64 = 0.0;
+            for k in 0..inner {
+                acc =
+                    acc.algebraic_add(m1_vals[i * inner + k].algebraic_mul(m2_vals[k * cols + j]));
+            }
+            prod[i * cols + j] = acc;
+        }
+    }
+
+    FlatMatrix {
+        rows,
+        cols,
+        vals: prod,
+    }
 }
 
 pub fn tiled_mult(m1: &FlatMatrix, m2: &FlatMatrix, tile_size: usize) -> FlatMatrix {

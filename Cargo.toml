@@ -19,3 +19,6 @@ harness = false
 [profile.samply]
 inherits = "release"
 debug = true
+
+[lints.rust]
+dead_code = "allow"

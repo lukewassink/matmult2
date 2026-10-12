@@ -100,3 +100,104 @@ bench_mult      fastest       │ slowest       │ median        │ mean      
 Timer precision: 41 ns
 bench_mult              fastest       │ slowest       │ median        │ mean          │ samples │ iters
 ├─ fused_mul_add_bench  1.219 s       │ 1.825 s       │ 1.257 s       │ 1.278 s       │ 100     │ 100
+
+## Raw slice
+
+running 4 tests
+test tests::naive_local_test ... ignored
+test tests::naive_mult_test ... ignored
+test tests::par_tiled_test ... ignored
+test tests::tiled_test ... ignored
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+bench_mult              fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ fused_mul_add_bench  (ignored)     │               │               │               │         │
+├─ local_acc            1.101 s       │ 1.155 s       │ 1.107 s       │ 1.109 s       │ 100     │ 100
+├─ naive                (ignored)     │               │               │               │         │
+├─ par_tiled            (ignored)     │               │               │               │         │
+├─ raw_slice            1.101 s       │ 1.21 s        │ 1.107 s       │ 1.111 s       │ 100     │ 100
+╰─ tiled                (ignored)     │               │               │               │         │
+
+
+running 4 tests
+test tests::naive_local_test ... ignored
+test tests::naive_mult_test ... ignored
+test tests::par_tiled_test ... ignored
+test tests::tiled_test ... ignored
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+bench_mult      fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ local_acc    (ignored)     │               │               │               │         │
+├─ naive        (ignored)     │               │               │               │         │
+├─ par_tiled    (ignored)     │               │               │               │         │
+├─ raw_slice    1.118 s       │ 1.685 s       │ 1.17 s        │ 1.21 s        │ 100     │ 100
+╰─ tiled        (ignored)     │               │               │               │         │
+
+
+running 4 tests
+test tests::naive_local_test ... ignored
+test tests::naive_mult_test ... ignored
+test tests::par_tiled_test ... ignored
+test tests::tiled_test ... ignored
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+bench_mult      fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ local_acc    (ignored)     │               │               │               │         │
+├─ naive        (ignored)     │               │               │               │         │
+├─ par_tiled    (ignored)     │               │               │               │         │
+├─ raw_slice    
+running 4 tests
+test tests::naive_local_test ... ignored
+test tests::naive_mult_test ... ignored
+test tests::par_tiled_test ... ignored
+test tests::tiled_test ... ignored
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+bench_mult              fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ algebraic_ops_bench  1.219 s       │ 1.666 s       │ 1.259 s       │ 1.269 s       │ 100     │ 100
+├─ local_acc            (ignored)     │               │               │               │         │
+├─ naive                (ignored)     │               │               │               │         │
+├─ par_tiled            (ignored)     │               │               │               │         │
+├─ raw_slice            (ignored)     │               │               │               │         │
+╰─ tiled                (ignored)     │               │               │               │         │
+
+
+running 4 tests
+test tests::naive_local_test ... ignored
+test tests::naive_mult_test ... ignored
+test tests::par_tiled_test ... ignored
+test tests::tiled_test ... ignored
+
+test result: ok. 0 passed; 0 failed; 4 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+bench_mult              fastest       │ slowest       │ median        │ mean          │ samples │ iters
+├─ algebraic_ops_bench  

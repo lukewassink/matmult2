@@ -1,6 +1,6 @@
 use divan::{Bencher, black_box};
 use matmult2::FlatMatrix;
-use matmult2::fused_mul_add;
+use matmult2::alebraic_ops;
 use matmult2::naive_local_mult;
 use matmult2::naive_mult;
 use matmult2::parallel_tiled_mult;
@@ -49,10 +49,19 @@ fn local_acc(bencher: Bencher) {
 }
 
 #[divan::bench]
-fn fused_mul_add_bench(bencher: Bencher) {
+fn algebraic_ops_bench(bencher: Bencher) {
     let (a, b) = setup(MAT_SIZE);
     bencher.bench_local(|| {
-        black_box(fused_mul_add(&a, &b));
+        black_box(alebraic_ops(&a, &b));
+    });
+}
+
+#[divan::bench]
+#[ignore]
+fn raw_slice(bencher: Bencher) {
+    let (a, b) = setup(MAT_SIZE);
+    bencher.bench_local(|| {
+        black_box(naive_local_mult(&a, &b));
     });
 }
 
